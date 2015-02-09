@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		28485C551A84AFF000667ECB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28485C541A84AFF000667ECB /* AppDelegate.swift */; };
+		28485C571A84AFF000667ECB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28485C561A84AFF000667ECB /* Images.xcassets */; };
+		28485C5A1A84AFF000667ECB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28485C581A84AFF000667ECB /* MainMenu.xib */; };
+		28485C661A84AFF100667ECB /* KeyCastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28485C651A84AFF100667ECB /* KeyCastTests.swift */; };
+		285ED37E1A888C4E00E97321 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */; };
+		28FD3B861A88596600D6A1C4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FD3B851A88596600D6A1C4 /* MainView.swift */; };
+		748E2EC91A87AF3100F5B319 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E2EC81A87AF3100F5B319 /* Accessibility.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		28485C601A84AFF100667ECB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28485C471A84AFF000667ECB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28485C4E1A84AFF000667ECB;
+			remoteInfo = KeyCast;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		28485C4F1A84AFF000667ECB /* KeyCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28485C531A84AFF000667ECB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28485C541A84AFF000667ECB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		28485C561A84AFF000667ECB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		28485C591A84AFF000667ECB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		28485C5F1A84AFF100667ECB /* KeyCastTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyCastTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28485C641A84AFF100667ECB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28485C651A84AFF100667ECB /* KeyCastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCastTests.swift; sourceTree = "<group>"; };
+		285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		28FD3B851A88596600D6A1C4 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		748E2EC81A87AF3100F5B319 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		28485C4C1A84AFF000667ECB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28485C5C1A84AFF100667ECB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		28485C461A84AFF000667ECB = {
+			isa = PBXGroup;
+			children = (
+				28485C511A84AFF000667ECB /* KeyCast */,
+				28485C621A84AFF100667ECB /* KeyCastTests */,
+				28485C501A84AFF000667ECB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		28485C501A84AFF000667ECB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				28485C4F1A84AFF000667ECB /* KeyCast.app */,
+				28485C5F1A84AFF100667ECB /* KeyCastTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		28485C511A84AFF000667ECB /* KeyCast */ = {
+			isa = PBXGroup;
+			children = (
+				28485C541A84AFF000667ECB /* AppDelegate.swift */,
+				28485C561A84AFF000667ECB /* Images.xcassets */,
+				28485C581A84AFF000667ECB /* MainMenu.xib */,
+				28485C521A84AFF000667ECB /* Supporting Files */,
+				748E2EC81A87AF3100F5B319 /* Accessibility.swift */,
+				28FD3B851A88596600D6A1C4 /* MainView.swift */,
+				285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */,
+			);
+			path = KeyCast;
+			sourceTree = "<group>";
+		};
+		28485C521A84AFF000667ECB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				28485C531A84AFF000667ECB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		28485C621A84AFF100667ECB /* KeyCastTests */ = {
+			isa = PBXGroup;
+			children = (
+				28485C651A84AFF100667ECB /* KeyCastTests.swift */,
+				28485C631A84AFF100667ECB /* Supporting Files */,
+			);
+			path = KeyCastTests;
+			sourceTree = "<group>";
+		};
+		28485C631A84AFF100667ECB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				28485C641A84AFF100667ECB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		28485C4E1A84AFF000667ECB /* KeyCast */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28485C691A84AFF100667ECB /* Build configuration list for PBXNativeTarget "KeyCast" */;
+			buildPhases = (
+				28485C4B1A84AFF000667ECB /* Sources */,
+				28485C4C1A84AFF000667ECB /* Frameworks */,
+				28485C4D1A84AFF000667ECB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KeyCast;
+			productName = KeyCast;
+			productReference = 28485C4F1A84AFF000667ECB /* KeyCast.app */;
+			productType = "com.apple.product-type.application";
+		};
+		28485C5E1A84AFF100667ECB /* KeyCastTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28485C6C1A84AFF100667ECB /* Build configuration list for PBXNativeTarget "KeyCastTests" */;
+			buildPhases = (
+				28485C5B1A84AFF100667ECB /* Sources */,
+				28485C5C1A84AFF100667ECB /* Frameworks */,
+				28485C5D1A84AFF100667ECB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28485C611A84AFF100667ECB /* PBXTargetDependency */,
+			);
+			name = KeyCastTests;
+			productName = KeyCastTests;
+			productReference = 28485C5F1A84AFF100667ECB /* KeyCastTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		28485C471A84AFF000667ECB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = cho45;
+				TargetAttributes = {
+					28485C4E1A84AFF000667ECB = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					28485C5E1A84AFF100667ECB = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 28485C4E1A84AFF000667ECB;
+					};
+				};
+			};
+			buildConfigurationList = 28485C4A1A84AFF000667ECB /* Build configuration list for PBXProject "KeyCast" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 28485C461A84AFF000667ECB;
+			productRefGroup = 28485C501A84AFF000667ECB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				28485C4E1A84AFF000667ECB /* KeyCast */,
+				28485C5E1A84AFF100667ECB /* KeyCastTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		28485C4D1A84AFF000667ECB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28485C571A84AFF000667ECB /* Images.xcassets in Resources */,
+				28485C5A1A84AFF000667ECB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28485C5D1A84AFF100667ECB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		28485C4B1A84AFF000667ECB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				748E2EC91A87AF3100F5B319 /* Accessibility.swift in Sources */,
+				28FD3B861A88596600D6A1C4 /* MainView.swift in Sources */,
+				285ED37E1A888C4E00E97321 /* PreferencesWindowController.swift in Sources */,
+				28485C551A84AFF000667ECB /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28485C5B1A84AFF100667ECB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28485C661A84AFF100667ECB /* KeyCastTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		28485C611A84AFF100667ECB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28485C4E1A84AFF000667ECB /* KeyCast */;
+			targetProxy = 28485C601A84AFF100667ECB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		28485C581A84AFF000667ECB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28485C591A84AFF000667ECB /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		28485C671A84AFF100667ECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		28485C681A84AFF100667ECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		28485C6A1A84AFF100667ECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = KeyCast/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		28485C6B1A84AFF100667ECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = KeyCast/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		28485C6D1A84AFF100667ECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = KeyCastTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyCast.app/Contents/MacOS/KeyCast";
+			};
+			name = Debug;
+		};
+		28485C6E1A84AFF100667ECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = KeyCastTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyCast.app/Contents/MacOS/KeyCast";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		28485C4A1A84AFF000667ECB /* Build configuration list for PBXProject "KeyCast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28485C671A84AFF100667ECB /* Debug */,
+				28485C681A84AFF100667ECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28485C691A84AFF100667ECB /* Build configuration list for PBXNativeTarget "KeyCast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28485C6A1A84AFF100667ECB /* Debug */,
+				28485C6B1A84AFF100667ECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28485C6C1A84AFF100667ECB /* Build configuration list for PBXNativeTarget "KeyCastTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28485C6D1A84AFF100667ECB /* Debug */,
+				28485C6E1A84AFF100667ECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 28485C471A84AFF000667ECB /* Project object */;
+}
