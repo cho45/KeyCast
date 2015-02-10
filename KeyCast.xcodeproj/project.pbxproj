@@ -13,7 +13,10 @@
 		28485C661A84AFF100667ECB /* KeyCastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28485C651A84AFF100667ECB /* KeyCastTests.swift */; };
 		285ED37E1A888C4E00E97321 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */; };
 		28FD3B861A88596600D6A1C4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FD3B851A88596600D6A1C4 /* MainView.swift */; };
+		74547BE11A8A559D003A079A /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 74547BE01A8A559D003A079A /* README.md */; };
 		748E2EC91A87AF3100F5B319 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E2EC81A87AF3100F5B319 /* Accessibility.swift */; };
+		74C19DB71A891BFA00ADED08 /* icon-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 74C19DB51A891BFA00ADED08 /* icon-menu.png */; };
+		74C19DB81A891BFA00ADED08 /* icon-menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74C19DB61A891BFA00ADED08 /* icon-menu@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		282BCF531A8A0C1200472C8A /* KeyCast-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyCast-Bridging-Header.h"; sourceTree = "<group>"; };
+		282BCF551A8A0C1300472C8A /* processlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = processlist.h; sourceTree = "<group>"; };
 		28485C4F1A84AFF000667ECB /* KeyCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28485C531A84AFF000667ECB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28485C541A84AFF000667ECB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,7 +42,10 @@
 		28485C651A84AFF100667ECB /* KeyCastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCastTests.swift; sourceTree = "<group>"; };
 		285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		28FD3B851A88596600D6A1C4 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		74547BE01A8A559D003A079A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		748E2EC81A87AF3100F5B319 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		74C19DB51A891BFA00ADED08 /* icon-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu.png"; sourceTree = "<group>"; };
+		74C19DB61A891BFA00ADED08 /* icon-menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,13 +87,18 @@
 		28485C511A84AFF000667ECB /* KeyCast */ = {
 			isa = PBXGroup;
 			children = (
+				74C19DB51A891BFA00ADED08 /* icon-menu.png */,
+				74C19DB61A891BFA00ADED08 /* icon-menu@2x.png */,
 				28485C541A84AFF000667ECB /* AppDelegate.swift */,
+				74547BE01A8A559D003A079A /* README.md */,
+				282BCF551A8A0C1300472C8A /* processlist.h */,
 				28485C561A84AFF000667ECB /* Images.xcassets */,
 				28485C581A84AFF000667ECB /* MainMenu.xib */,
 				28485C521A84AFF000667ECB /* Supporting Files */,
 				748E2EC81A87AF3100F5B319 /* Accessibility.swift */,
 				28FD3B851A88596600D6A1C4 /* MainView.swift */,
 				285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */,
+				282BCF531A8A0C1200472C8A /* KeyCast-Bridging-Header.h */,
 			);
 			path = KeyCast;
 			sourceTree = "<group>";
@@ -195,6 +208,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74C19DB81A891BFA00ADED08 /* icon-menu@2x.png in Resources */,
+				74C19DB71A891BFA00ADED08 /* icon-menu.png in Resources */,
 				28485C571A84AFF000667ECB /* Images.xcassets in Resources */,
 				28485C5A1A84AFF000667ECB /* MainMenu.xib in Resources */,
 			);
@@ -216,6 +231,7 @@
 			files = (
 				748E2EC91A87AF3100F5B319 /* Accessibility.swift in Sources */,
 				28FD3B861A88596600D6A1C4 /* MainView.swift in Sources */,
+				74547BE11A8A559D003A079A /* README.md in Sources */,
 				285ED37E1A888C4E00E97321 /* PreferencesWindowController.swift in Sources */,
 				28485C551A84AFF000667ECB /* AppDelegate.swift in Sources */,
 			);
@@ -332,10 +348,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = KeyCast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "KeyCast/KeyCast-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -343,10 +362,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = KeyCast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "KeyCast/KeyCast-Bridging-Header.h";
 			};
 			name = Release;
 		};

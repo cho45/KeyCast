@@ -17,6 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         " "    : "␣",
         "\u{7f}" : "⌫",
         "\u{03}" : "⌤",
+        "\u{10}" : "⏏",
+        "\u{F728}" : "⌦",
+        "\u{F739}" : "⌧",
         "\u{F704}" : "[F1]",
         "\u{F705}" : "[F2]",
         "\u{F706}" : "[F3]",
@@ -34,12 +37,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         "\u{F701}" : "↓",
         "\u{F702}" : "←",
         "\u{F703}" : "→",
-        /*
-        "\xEF701F\x9C\xAC" : "⇞",
-        "\xEF\x9C\xAD" : "⇟",
-        "\xEF\x9C\xA9" : "↖",
-        "\xEF\x9C\xAB" : "↘",
-        */
+        "\u{F72C}" : "⇞",
+        "\u{F72D}" : "⇟",
+        "\u{F729}" : "↖",
+        "\u{F72B}" : "↘",
     ]
     
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
@@ -52,11 +53,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var preferences: PreferencesWindow!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+        
         Accessibility.checkAccessibilityEnabled(self)
 
-        // AXSecureTextField については送られてこないので大丈夫
-        // ブラウザとかは AXSecureTextField を使っていないので、表示されることがある。自動的に判定することができない
-        // ターミナルも同様
         NSEvent.addGlobalMonitorForEventsMatchingMask(NSEventMask.KeyDownMask) { (e: NSEvent!) in
             if !self.canShowInput() {
                 return
@@ -67,14 +66,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // println(e)
             
             var mod = ""
-            if e.modifierFlags.rawValue &  NSEventModifierFlags.ShiftKeyMask.rawValue != 0 {
-                mod += "⇧"
-            }
             if e.modifierFlags.rawValue &  NSEventModifierFlags.ControlKeyMask.rawValue != 0 {
                 mod += "⌃"
             }
             if e.modifierFlags.rawValue &  NSEventModifierFlags.AlternateKeyMask.rawValue != 0 {
                 mod += "⌥"
+            }
+            if e.modifierFlags.rawValue &  NSEventModifierFlags.ShiftKeyMask.rawValue != 0 {
+                mod += "⇧"
             }
             if e.modifierFlags.rawValue &  NSEventModifierFlags.CommandKeyMask.rawValue != 0 {
                 mod += "⌘"
@@ -119,11 +118,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         window.contentView = view
         
-        statusItem.title = "KeyCast"
         statusItem.menu = menu
+        // statusItem.image = NSImage(named: "icon-menu")
         statusItem.highlightMode = true
+        updateMenuTitle()
         
-        view.appendLog("KeyCast Initialized\nYou can drag this to the position you wish")
+        view.appendLog("KeyCast Initialized\nYou can drag this to the position you want")
         
         NSNotificationCenter.defaultCenter().addObserver(
             self,
@@ -131,17 +131,93 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             name: NSUserDefaultsDidChangeNotification,
             object: nil
         )
-        self.resize(preferences.width, height: preferences.height)
+        self.userDefaultsDidChange(NSNotification())
+        
+        
+        enableGlobalAccessibilityFeatures()
+    }
+    
+    // VoiceOver が起動していない限りアクセシビリティオブジェクトを作らない一部アプリケーション用 (eg. Google Chrome) に
+    // VoiceOver がセットする属性をセットする。VoiceOver 判定のため自プロセスには設定しない
+    func enableGlobalAccessibilityFeatures() {
+        NSWorkspace.sharedWorkspace().notificationCenter.addObserver(
+            self,
+            selector: "enableAccessibilityForNewApplication:",
+            name: NSWorkspaceDidLaunchApplicationNotification,
+            object: nil
+        )
+        
+        var ptr: Unmanaged<AnyObject>?
+        let pid = NSProcessInfo.processInfo().processIdentifier
+        for application in NSWorkspace.sharedWorkspace().runningApplications {
+            if application.processIdentifier == pid {
+                continue
+            }
+            let app = AXUIElementCreateApplication(application.processIdentifier).takeRetainedValue()
+            
+            AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
+            AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface", 1)
+        }
+    }
+    
+    // callback
+    func enableAccessibilityForNewApplication(aNotification: NSNotification) {
+        let pid = aNotification.userInfo!["NSApplicationProcessIdentifier"] as Int
+        
+        var ptr: Unmanaged<AnyObject>?
+        let app = AXUIElementCreateApplication(Int32(pid)).takeRetainedValue()
+        println("NSWorkspaceWillLaunchApplicationNotification")
+        println(app)
+        
+        AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
+        AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface", 1)
+    }
+    
+    func disableGlobalAccessibilityFeatures() {
+        NSWorkspace.sharedWorkspace().notificationCenter.removeObserver(self, name: NSWorkspaceWillLaunchApplicationNotification, object: nil)
+        
+        if isVoiceOverRunning() {
+            return
+        }
+        
+        var ptr: Unmanaged<AnyObject>?
+        let pid = NSProcessInfo.processInfo().processIdentifier
+        for application in NSWorkspace.sharedWorkspace().runningApplications {
+            if application.processIdentifier == pid {
+                continue
+            }
+            let app = AXUIElementCreateApplication(application.processIdentifier).takeRetainedValue()
+            println(app)
+            
+            AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
+            AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface", 0)
+        }
+    }
+    
+    // 完全に起動したあとでなければ常に false を返す
+    func isVoiceOverRunning()->Bool {
+        var ptr: Unmanaged<AnyObject>?
+        let pid = NSProcessInfo.processInfo().processIdentifier
+        let app = AXUIElementCreateApplication(pid).takeRetainedValue()
+        AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
+        if let running = ptr?.takeRetainedValue() as? Int {
+            if running == 1 {
+                return true
+            }
+        }
+        return false
     }
     
     func userDefaultsDidChange(aNotification: NSNotification) {
         window.alphaValue = CGFloat(preferences.opacity) / 100.0
         self.resize(preferences.width, height: preferences.height)
         view.shadowCount = preferences.shadow
+        view.maxLine = preferences.lines
         view.needsDisplay = true
     }
     
     func applicationWillTerminate(aNotification: NSNotification) {
+        disableGlobalAccessibilityFeatures()
     }
     
     func resize (width: Int, height: Int) {
@@ -160,6 +236,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     
+    func updateMenuTitle() {
+        statusItem.title = (enabled ? "\u{2713} " : "  ") + NSRunningApplication.currentApplication().localizedName!
+    }
+    
     func canShowInput()-> Bool {
         return enabled && canShowInputByFocusedUIElement()
     }
@@ -173,27 +253,71 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if ptr == nil {
             return true
         }
-        var focusedApp = ptr!.takeRetainedValue() as AXUIElement
+        let focusedApp = ptr!.takeRetainedValue() as AXUIElement
+        println("focusedApp")
+        println(focusedApp)
+        
+        var pid: pid_t = 0
+        AXUIElementGetPid(focusedApp, &pid)
+        
+        let bundleId_ = NSRunningApplication(processIdentifier: pid)?.bundleIdentifier
+        if bundleId_ == nil {
+            return true
+        }
+        let bundleId = bundleId_!
+        
         
         AXUIElementCopyAttributeValue(focusedApp, NSAccessibilityFocusedUIElementAttribute, &ptr)
         if ptr == nil {
             return true
         }
-        var ui = ptr!.takeRetainedValue() as AXUIElement
+        let ui = ptr!.takeRetainedValue() as AXUIElement
+        println("ui")
+        println(ui)
         
-        AXUIElementCopyAttributeValue(ui, "AXValue", &ptr)
-        if ptr == nil {
-            return true
-        }
-        let value = ptr!.takeRetainedValue() as String
         
-        // Terminal.app で sudo っぽいことが起きていたらタイプを表示しない
-        // (screen の中だと意味がない)
-        let re = NSRegularExpression(pattern: "Password:\\s*$", options: .CaseInsensitive, error: nil)!
-        let matches = re.matchesInString(value, options: nil, range: NSMakeRange(0, countElements(value)))
-        if matches.count > 0 {
-            return false
+        /*
+        let target = focusedApp
+        var arrayPtr: Unmanaged<CFArray>?
+        AXUIElementCopyAttributeNames(target, &arrayPtr)
+        if let array = arrayPtr?.takeRetainedValue() {
+            for var i = 0, len = CFArrayGetCount(array); i < len; i++ {
+                let name = unsafeBitCast(CFArrayGetValueAtIndex(array, i), CFString.self)
+                AXUIElementCopyAttributeValue(target, name, &ptr)
+                let value = ptr?.takeRetainedValue()
+                if value != nil {
+                    println(name)
+                    println(value)
+                    println("")
+                }
+            }
         }
+        */
+        
+        if bundleId == "com.apple.Terminal" {
+            AXUIElementCopyAttributeValue(ui, "AXValue", &ptr)
+            if ptr != nil {
+                let value = ptr!.takeRetainedValue() as String
+                
+                // Terminal.app で sudo っぽいことが起きていたらタイプを表示しない
+                // (screen の中だと意味がない) sudo のラッパを書いたほうがいいかも
+                let re = NSRegularExpression(pattern: "Password:\\s*$", options: .CaseInsensitive, error: nil)!
+                let matches = re.matchesInString(value, options: nil, range: NSMakeRange(0, countElements(value)))
+                if matches.count > 0 {
+                    return false
+                }
+            }
+        }
+        
+        AXUIElementCopyAttributeValue(ui, "AXSubrole", &ptr)
+        if ptr != nil {
+            let value = ptr!.takeRetainedValue() as String
+            println(value)
+            if value == "AXSecureTextField" {
+                return false
+            }
+        }
+        
         // NSAccessibilityFocusedUIElementChangedNotification
         return true
     }
@@ -203,6 +327,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         enabled = !enabled
         sender.state = enabled ? 1 : 0
         println(enabled)
+        updateMenuTitle()
     }
     
     @IBAction func openPreferencesWindow(sender: AnyObject) {
@@ -231,5 +356,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         preferences.updateFontInfo(preferences.font)
         view.font = preferences.font
     }
+    
+    /* wait for Xcode 6.3...
+    func processList() {
+        // https://developer.apple.com/legacy/library/qa/qa2001/qa1123.html
+        
+        var err : Int32
+        var nullpo = UnsafeMutablePointer<Void>.null()
+        
+        var names: [Int32] = [ CTL_KERN, KERN_PROC, KERN_PROC_ALL, 0 ]
+        var length: UInt = 0
+        var namelen: u_int = u_int(names.count)
+        err = sysctl(&names, namelen, nullpo, &length, nullpo, 0)
+        if (err == -1) {
+            println("error")
+            return
+        }
+        println(length)
+        
+        var result = UnsafeMutablePointer<kinfo_proc>.alloc(Int(length))
+        err = sysctl(&names, namelen, result, &length, nullpo, 0)
+        if (err == -1) {
+            println("error")
+            return
+        }
+        
+        println(result)
+   rkkkgg}
+    */
 }
 

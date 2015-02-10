@@ -9,6 +9,7 @@ class MainView : NSView {
     internal var log = ""
     var font = NSFont.boldSystemFontOfSize(24)
     var shadowCount = 10
+    var maxLine : Int = 5
     
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
@@ -47,8 +48,8 @@ class MainView : NSView {
     func appendLog(str: String) {
         log += str
         let lines = split(log, { $0 == "\n" })
-        if lines.count > 5 {
-            log = join("\n", lines[lines.count - 5 ..< lines.count])
+        if lines.count > maxLine {
+            log = join("\n", lines[lines.count - maxLine ..< lines.count])
         }
         self.needsDisplay = true
         

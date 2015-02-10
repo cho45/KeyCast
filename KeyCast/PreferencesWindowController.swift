@@ -11,6 +11,7 @@ class PreferencesWindow: NSWindow {
     @IBOutlet weak var inputHeight: NSTextField!
     @IBOutlet weak var inputShadow: NSSlider!
     @IBOutlet weak var inputOpacity: NSSlider!
+    @IBOutlet weak var inputLines: NSTextField!
     
     let userDefaultsController = NSUserDefaultsController.sharedUserDefaultsController()
     var font = NSFont.boldSystemFontOfSize(24)
@@ -26,6 +27,13 @@ class PreferencesWindow: NSWindow {
             return userDefaultsController.values.valueForKey("height") as Int
         }
     }
+    
+    var lines : Int {
+        get {
+            return userDefaultsController.values.valueForKey("lines") as Int
+        }
+    }
+    
     var shadow : Int {
         get {
             return userDefaultsController.values.valueForKey("shadow") as Int
@@ -44,12 +52,14 @@ class PreferencesWindow: NSWindow {
             "width": 800,
             "height": 600,
             "shadow": 5,
+            "lines": 5,
             "opacity": 90,
         ])
         defaults.synchronize()
         
         inputWidth.bind("value", toObject: userDefaultsController, withKeyPath: "values.width", options: [ "NSContinuouslyUpdatesValue": true ])
         inputHeight.bind("value", toObject: userDefaultsController, withKeyPath: "values.height", options: [ "NSContinuouslyUpdatesValue": true ])
+        inputLines.bind("value", toObject: userDefaultsController, withKeyPath: "values.lines", options: [ "NSContinuouslyUpdatesValue": true ])
         inputShadow.bind("value", toObject: userDefaultsController, withKeyPath: "values.shadow", options: [ "NSContinuouslyUpdatesValue": true ])
         inputOpacity.bind("value", toObject: userDefaultsController, withKeyPath: "values.opacity", options: [ "NSContinuouslyUpdatesValue": true ])
         
