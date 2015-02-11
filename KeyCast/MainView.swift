@@ -52,6 +52,10 @@ class MainView : NSView {
             log = join("\n", lines[lines.count - maxLine ..< lines.count])
         }
         self.needsDisplay = true
-        
+    }
+    
+    func clear() {
+        log = ""
+        self.needsDisplay = true
     }
 }

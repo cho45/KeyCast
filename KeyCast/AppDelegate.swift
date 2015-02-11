@@ -81,14 +81,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             
             for c in e.charactersIgnoringModifiers!.uppercaseString.unicodeScalars {
-                print(NSString(format: "%08X", c.value)); print(" ")
+                println(NSString(format: "%08X", c.value));
             }
             
 
             let char = self.keyToReadableString(e.charactersIgnoringModifiers!.uppercaseString)
             if mod.isEmpty {
                 let interval = NSDate().timeIntervalSinceDate(self.prevKeyed)
-                println(interval)
                 if interval > 1 {
                     self.view.appendLog("\n" + char)
                 } else {
@@ -133,6 +132,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         )
         self.userDefaultsDidChange(NSNotification())
         
+        
+        /*
+        let callback: AXObserverCallback = (AXObserver!, AXUIElement!, CFString!, UnsafeMutablePointer<Void>) -> Void) {
+            
+        }
+        var observer: Unmanaged<AXObserver>?
+        AXObserverCreate(NSProcessInfo.processInfo().processIdentifier, callback, &observer)
+        AXObserverAddNotification(observer, AXUIElementCreateSystemWide().takeRetainedValue(), NSAccessibilityFocusedUIElementChangedNotification, &0)
+*/
         
         enableGlobalAccessibilityFeatures()
     }
@@ -254,8 +262,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         let focusedApp = ptr!.takeRetainedValue() as AXUIElement
-        println("focusedApp")
-        println(focusedApp)
         
         var pid: pid_t = 0
         AXUIElementGetPid(focusedApp, &pid)
@@ -272,8 +278,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         let ui = ptr!.takeRetainedValue() as AXUIElement
-        println("ui")
-        println(ui)
         
         
         /*
@@ -312,7 +316,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AXUIElementCopyAttributeValue(ui, "AXSubrole", &ptr)
         if ptr != nil {
             let value = ptr!.takeRetainedValue() as String
-            println(value)
             if value == "AXSecureTextField" {
                 return false
             }
@@ -326,8 +329,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func toggleState(sender: NSMenuItem) {
         enabled = !enabled
         sender.state = enabled ? 1 : 0
-        println(enabled)
         updateMenuTitle()
+    }
+    @IBAction func clearLog(sender: AnyObject) {
+        view.clear()
     }
     
     @IBAction func openPreferencesWindow(sender: AnyObject) {
