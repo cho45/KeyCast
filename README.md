@@ -26,3 +26,11 @@ eg.
 
     # disable
     osascript -e 'tell application "KeyCast"' -e 'set enabled to false' -e 'end tell'
+    
+eg. (on Yosemite)
+
+    # enable
+    osascript -l JavaScript -e 'Application("KeyCast").enabled = true;' 
+     
+    #disable
+    osascript -l JavaScript -e 'Application("KeyCast").enabled = false;' 
