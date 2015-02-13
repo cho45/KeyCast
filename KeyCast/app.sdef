@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="KeyCast Terminology">
+    <suite name="KeyCast Suite" code="KYCS" description="KeyCast classes.">
+        <class name="application" code="capp" description="KeyCast's top level scripting object.">
+            <cocoa class="NSApplication"/>
+            <property name="enabled" code="ENbl" description="Whether or not KeyCast is enabled." type="boolean" access="rw"/>
+        </class>
+    </suite>
+</dictionary>

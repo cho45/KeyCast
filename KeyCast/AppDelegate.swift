@@ -7,50 +7,25 @@
 
 import Cocoa
 
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let REPLACE_MAP: Dictionary<String, String> = [
-        "\r"   : "↵\n",
-        "\u{1B}"   : "⎋",
-        "\t"   : "⇥",
-        "\u{19}" : "⇤",
-        " "    : "␣",
-        "\u{7f}" : "⌫",
-        "\u{03}" : "⌤",
-        "\u{10}" : "⏏",
-        "\u{F728}" : "⌦",
-        "\u{F739}" : "⌧",
-        "\u{F704}" : "[F1]",
-        "\u{F705}" : "[F2]",
-        "\u{F706}" : "[F3]",
-        "\u{F707}" : "[F4]",
-        "\u{F708}" : "[F5]",
-        "\u{F709}" : "[F6]",
-        "\u{F70A}" : "[F7]",
-        "\u{F70B}" : "[F8]",
-        "\u{F70C}" : "[F9]",
-        "\u{F70D}" : "[F10]",
-        "\u{F70E}" : "[F11]",
-        "\u{F70F}" : "[F12]",
-
-        "\u{F700}" : "↑",
-        "\u{F701}" : "↓",
-        "\u{F702}" : "←",
-        "\u{F703}" : "→",
-        "\u{F72C}" : "⇞",
-        "\u{F72D}" : "⇟",
-        "\u{F729}" : "↖",
-        "\u{F72B}" : "↘",
-    ]
-    
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
-    var enabled: Bool = true
+    var enabled: Bool = true {
+        didSet {
+            menuEnabled.state = enabled ? 1 : 0
+            updateMenuTitle()
+            toast.toast(enabled ? "KeyCast is enabled" : "KeyCast is disabled")
+        }
+    }
     var window: NSWindow! = nil
     var view: MainView! = nil
     var prevKeyed: NSDate = NSDate()
 
     @IBOutlet weak var menu: NSMenu!
+    @IBOutlet weak var menuEnabled: NSMenuItem!
     @IBOutlet weak var preferences: PreferencesWindow!
+    @IBOutlet weak var toast: ToastWindow!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
@@ -65,27 +40,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             // println(e)
             
-            var mod = ""
-            if e.modifierFlags.rawValue &  NSEventModifierFlags.ControlKeyMask.rawValue != 0 {
-                mod += "⌃"
-            }
-            if e.modifierFlags.rawValue &  NSEventModifierFlags.AlternateKeyMask.rawValue != 0 {
-                mod += "⌥"
-            }
-            if e.modifierFlags.rawValue &  NSEventModifierFlags.ShiftKeyMask.rawValue != 0 {
-                mod += "⇧"
-            }
-            if e.modifierFlags.rawValue &  NSEventModifierFlags.CommandKeyMask.rawValue != 0 {
-                mod += "⌘"
-            }
             
             
             for c in e.charactersIgnoringModifiers!.uppercaseString.unicodeScalars {
                 println(NSString(format: "%08X", c.value));
             }
             
+            let (mod, char) = Utils.keyStringFromEvent(e)
 
-            let char = self.keyToReadableString(e.charactersIgnoringModifiers!.uppercaseString)
             if mod.isEmpty {
                 let interval = NSDate().timeIntervalSinceDate(self.prevKeyed)
                 if interval > 1 {
@@ -100,8 +62,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             self.prevKeyed = NSDate()
         }
-        
-        preferences.initControls()
         
         let rect = NSRect(x: 0, y: 0, width: 800, height: 500)
         window = NSWindow(contentRect: rect, styleMask: NSBorderlessWindowMask, backing: NSBackingStoreType.Buffered, defer: false)
@@ -130,7 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             name: NSUserDefaultsDidChangeNotification,
             object: nil
         )
-        self.userDefaultsDidChange(NSNotification())
+        userDefaultsDidChange(nil)
         
         
         /*
@@ -143,11 +103,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 */
         
         enableGlobalAccessibilityFeatures()
+        toast.toast("Initialized")
     }
     
     // VoiceOver が起動していない限りアクセシビリティオブジェクトを作らない一部アプリケーション用 (eg. Google Chrome) に
     // VoiceOver がセットする属性をセットする。VoiceOver 判定のため自プロセスには設定しない
     func enableGlobalAccessibilityFeatures() {
+        println("enableGlobalAccessibilityFeatures")
         NSWorkspace.sharedWorkspace().notificationCenter.addObserver(
             self,
             selector: "enableAccessibilityForNewApplication:",
@@ -162,7 +124,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 continue
             }
             let app = AXUIElementCreateApplication(application.processIdentifier).takeRetainedValue()
-            
+            println("enableGlobalAccessibilityFeatures: \(app)")
             AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
             AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface", 1)
         }
@@ -216,7 +178,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
     
-    func userDefaultsDidChange(aNotification: NSNotification) {
+    func userDefaultsDidChange(aNotification: NSNotification!) {
         window.alphaValue = CGFloat(preferences.opacity) / 100.0
         self.resize(preferences.width, height: preferences.height)
         view.shadowCount = preferences.shadow
@@ -235,24 +197,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         view.setFrameSize(NSSize(width: rect.width, height: rect.height))
     }
 
-    func keyToReadableString (string: String)-> String {
-        var str = string
-        for (k, v) in self.REPLACE_MAP {
-            str = str.stringByReplacingOccurrencesOfString(k, withString: v)
-        }
-        return str
-    }
-
-    
     func updateMenuTitle() {
         statusItem.title = (enabled ? "\u{2713} " : "  ") + NSRunningApplication.currentApplication().localizedName!
     }
     
     func canShowInput()-> Bool {
-        return enabled && canShowInputByFocusedUIElement()
+        return enabled && canShowInputByRunningProcesses() && canShowInputByFocusedUIElement()
+    }
+    
+    func canShowInputByRunningProcesses()->Bool {
+        if !preferences.hideSudoInProcessList {
+            return true
+        }
+        
+        // sudo 実行中は入力を表示しない
+        return !IsInBSDProcessList("sudo")
     }
     
     func canShowInputByFocusedUIElement()->Bool {
+        if !preferences.hideNativePasswordInput {
+            return true
+        }
+        
         var ptr: Unmanaged<AnyObject>?
         
         let system = AXUIElementCreateSystemWide().takeRetainedValue()
@@ -298,6 +264,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         */
         
+        /*
         if bundleId == "com.apple.Terminal" {
             AXUIElementCopyAttributeValue(ui, "AXValue", &ptr)
             if ptr != nil {
@@ -312,6 +279,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
+        */
         
         AXUIElementCopyAttributeValue(ui, "AXSubrole", &ptr)
         if ptr != nil {
@@ -328,15 +296,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func toggleState(sender: NSMenuItem) {
         enabled = !enabled
-        sender.state = enabled ? 1 : 0
-        updateMenuTitle()
     }
+    
     @IBAction func clearLog(sender: AnyObject) {
         view.clear()
     }
     
     @IBAction func openPreferencesWindow(sender: AnyObject) {
-        preferences.orderFrontRegardless()
+        preferences.makeKeyAndOrderFront(nil)
     }
     
     @IBAction func chooseFont(sender: AnyObject) {
@@ -389,5 +356,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         println(result)
    rkkkgg}
     */
+    
+    // osascript -e 'tell application "KeyCast"' -e 'set enabled to true' -e 'end tell'
+    // osascript -e 'tell application "KeyCast"' -e 'set enabled to false' -e 'end tell'
+    override func application(sender: NSApplication, delegateHandlesKey key: String) -> Bool {
+        if key == "enabled" {
+            return true
+        }
+        return false
+    }
 }
 

@@ -12,6 +12,9 @@ class PreferencesWindow: NSWindow {
     @IBOutlet weak var inputShadow: NSSlider!
     @IBOutlet weak var inputOpacity: NSSlider!
     @IBOutlet weak var inputLines: NSTextField!
+    @IBOutlet weak var inputHideInputAutomaticaly: NSButton!
+    @IBOutlet weak var inputHideNativePasswordInput: NSButton!
+    @IBOutlet weak var inputHideSudoInProcessList: NSButton!
     
     let userDefaultsController = NSUserDefaultsController.sharedUserDefaultsController()
     var font = NSFont.boldSystemFontOfSize(24)
@@ -46,7 +49,23 @@ class PreferencesWindow: NSWindow {
         }
     }
     
-    func initControls() {
+    var hideInputAutomaticaly : Bool {
+        get {
+            return userDefaultsController.values.valueForKey("hideInputAutomaticaly") as Bool
+        }
+    }
+    var hideNativePasswordInput : Bool {
+        get {
+            return hideInputAutomaticaly && userDefaultsController.values.valueForKey("hideNativePasswordInput") as Bool
+        }
+    }
+    var hideSudoInProcessList : Bool {
+        get {
+            return hideInputAutomaticaly &&  userDefaultsController.values.valueForKey("hideSudoInProcessList") as Bool
+        }
+    }
+    
+    override func awakeFromNib() {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.registerDefaults([
             "width": 800,
@@ -54,6 +73,9 @@ class PreferencesWindow: NSWindow {
             "shadow": 5,
             "lines": 5,
             "opacity": 90,
+            "hideInputAutomaticaly": true,
+            "hideNativePasswordInput": true,
+            "hideSudoInProcessList": true,
         ])
         defaults.synchronize()
         
@@ -62,6 +84,10 @@ class PreferencesWindow: NSWindow {
         inputLines.bind("value", toObject: userDefaultsController, withKeyPath: "values.lines", options: [ "NSContinuouslyUpdatesValue": true ])
         inputShadow.bind("value", toObject: userDefaultsController, withKeyPath: "values.shadow", options: [ "NSContinuouslyUpdatesValue": true ])
         inputOpacity.bind("value", toObject: userDefaultsController, withKeyPath: "values.opacity", options: [ "NSContinuouslyUpdatesValue": true ])
+        
+        inputHideInputAutomaticaly.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideInputAutomaticaly", options: [ "NSContinuouslyUpdatesValue": true ])
+        inputHideNativePasswordInput.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideNativePasswordInput", options: [ "NSContinuouslyUpdatesValue": true ])
+        inputHideSudoInProcessList.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideSudoInProcessList", options: [ "NSContinuouslyUpdatesValue": true ])
         
         let fontName = userDefaultsController.values.valueForKey("fontName") as String?
         let pointSize = userDefaultsController.values.valueForKey("pointSize") as Float?
@@ -72,6 +98,24 @@ class PreferencesWindow: NSWindow {
             }
         }
         updateFontInfo(font)
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "userDefaultsDidChange:",
+            name: NSUserDefaultsDidChangeNotification,
+            object: nil
+        )
+        userDefaultsDidChange(nil)
+    }
+    
+    func userDefaultsDidChange(aNotification: NSNotification!) {
+        if hideInputAutomaticaly {
+            inputHideNativePasswordInput.enabled = true
+            inputHideSudoInProcessList.enabled = true
+        } else {
+            inputHideNativePasswordInput.enabled = false
+            inputHideSudoInProcessList.enabled = false
+        }
     }
     
     override func cancelOperation(sender: AnyObject?) {
@@ -83,6 +127,12 @@ class PreferencesWindow: NSWindow {
         textSelectedFont.stringValue = String(format: "%@ %.0fpt", font.displayName!, Float(font.pointSize))
         userDefaultsController.values.setValue(font.fontName, forKey: "fontName")
         userDefaultsController.values.setValue(Float(font.pointSize), forKey: "pointSize")
+    }
+    
+    @IBAction func setScreenWidth(sender: AnyObject) {
+        if let width = screen?.visibleFrame.size.width {
+            userDefaultsController.values.setValue(width, forKey: "width")
+        }
     }
 }
 

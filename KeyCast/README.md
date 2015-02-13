@@ -11,4 +11,18 @@ KeyCast detect the focused input is password input. So you do not need to disabl
 Supported:
 
  * Native AXSecureTextField
- * Google Chrome's password input (require reload after KeyCast launched)
+ * Google Chrome's password input
+ * Local `sudo` (hide on `sudo` is in processlist)
+
+Scripting Bridge
+----------------
+
+KeyCast also supports scripting bridge. You can control (enable or disable) KeyCast by AppleScript or JavaScript (Yosemite).
+
+eg.
+
+    # enable 
+    osascript -e 'tell application "KeyCast"' -e 'set enabled to true' -e 'end tell'
+
+    # disable
+    osascript -e 'tell application "KeyCast"' -e 'set enabled to false' -e 'end tell'
