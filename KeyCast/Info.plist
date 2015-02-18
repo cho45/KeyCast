@@ -21,12 +21,14 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
+	<true/>
+	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2015年 cho45. All rights reserved.</string>
@@ -36,7 +38,5 @@
 	<string>NSApplication</string>
 	<key>OSAScriptingDefinition</key>
 	<string>app.sdef</string>
-	<key>NSAppleScriptEnabled</key>
-	<true/>
 </dict>
 </plist>
