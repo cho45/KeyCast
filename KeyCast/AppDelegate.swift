@@ -314,7 +314,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func openPreferencesWindow(sender: AnyObject) {
         preferences.makeKeyAndOrderFront(nil)
-        NSApp.activateIgnoringOtherApps!foo(true)
+        NSApp.activateIgnoringOtherApps!(true)
     }
     
     @IBAction func chooseFont(sender: AnyObject) {
