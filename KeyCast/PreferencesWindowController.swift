@@ -15,6 +15,7 @@ class PreferencesWindow: NSWindow {
     @IBOutlet weak var inputHideInputAutomaticaly: NSButton!
     @IBOutlet weak var inputHideNativePasswordInput: NSButton!
     @IBOutlet weak var inputHideSudoInProcessList: NSButton!
+    @IBOutlet weak var inputHotkey: SRRecorderControl!
     
     let userDefaultsController = NSUserDefaultsController.sharedUserDefaultsController()
     var font = NSFont.boldSystemFontOfSize(24)
@@ -65,6 +66,18 @@ class PreferencesWindow: NSWindow {
         }
     }
     
+    var hotkey : (UInt16, NSEventModifierFlags)? {
+        get {
+            if let key = userDefaultsController.values.valueForKey("hotkey") as? Dictionary<String, AnyObject> {
+                let keyCode : UInt16 = numericCast(key["keyCode"]! as UInt)
+                let modifierFlags = NSEventModifierFlags(key["modifierFlags"] as UInt)
+                return (keyCode, modifierFlags)
+            } else {
+                return nil
+            }
+        }
+    }
+    
     override func awakeFromNib() {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.registerDefaults([
@@ -84,6 +97,11 @@ class PreferencesWindow: NSWindow {
         inputLines.bind("value", toObject: userDefaultsController, withKeyPath: "values.lines", options: [ "NSContinuouslyUpdatesValue": true ])
         inputShadow.bind("value", toObject: userDefaultsController, withKeyPath: "values.shadow", options: [ "NSContinuouslyUpdatesValue": true ])
         inputOpacity.bind("value", toObject: userDefaultsController, withKeyPath: "values.opacity", options: [ "NSContinuouslyUpdatesValue": true ])
+        inputHotkey.bind("value", toObject: userDefaultsController, withKeyPath: "values.hotkey", options: nil )
+        inputHotkey.delegate = self
+        inputHotkey.allowsEscapeToCancelRecording = true
+        inputHotkey.setAllowedModifierFlags((NSEventModifierFlags.ShiftKeyMask | NSEventModifierFlags.CommandKeyMask | NSEventModifierFlags.ControlKeyMask | NSEventModifierFlags.AlternateKeyMask).rawValue, requiredModifierFlags: 0, allowsEmptyModifierFlags: false)
+        inputHotkey.enabled = true
         
         inputHideInputAutomaticaly.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideInputAutomaticaly", options: [ "NSContinuouslyUpdatesValue": true ])
         inputHideNativePasswordInput.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideNativePasswordInput", options: [ "NSContinuouslyUpdatesValue": true ])
@@ -109,6 +127,8 @@ class PreferencesWindow: NSWindow {
     }
     
     func userDefaultsDidChange(aNotification: NSNotification!) {
+        println("changed")
+        
         if hideInputAutomaticaly {
             inputHideNativePasswordInput.enabled = true
             inputHideSudoInProcessList.enabled = true
@@ -116,6 +136,11 @@ class PreferencesWindow: NSWindow {
             inputHideNativePasswordInput.enabled = false
             inputHideSudoInProcessList.enabled = false
         }
+        
+        // SRRecorderControl の bind を読むとなぜか無限ループになるのでここでは触らないようにしなければならない…
+    }
+    
+    func shortcutRecorderDidEndRecording(sr: SRRecorderControl) {
     }
     
     override func cancelOperation(sender: AnyObject?) {

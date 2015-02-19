@@ -29,7 +29,6 @@ class ToastWindow : NSWindow {
     }
     
     override func awakeFromNib() {
-        println(styleMask == NSBorderlessWindowMask)
         hasShadow = true
         opaque = false
         level = 10000

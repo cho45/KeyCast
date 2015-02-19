@@ -32,6 +32,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Accessibility.checkAccessibilityEnabled(self)
 
         NSEvent.addGlobalMonitorForEventsMatchingMask(NSEventMask.KeyDownMask) { (e: NSEvent!) in
+            if let (hotkey, hotkeyflags) = self.preferences.hotkey {
+                // println("mod")
+                // println(String(e.modifierFlags.rawValue & NSEventModifierFlags.DeviceIndependentModifierFlagsMask.rawValue, radix: 2))
+                // println(String(hotkeyflags.rawValue, radix: 2))
+                let sameKeyCode = e.keyCode == hotkey
+                let sameModifiers = (e.modifierFlags & NSEventModifierFlags.DeviceIndependentModifierFlagsMask).rawValue == hotkeyflags.rawValue
+                if sameKeyCode && sameModifiers {
+                    self.toggleState(nil)
+                }
+            }
+            
             if !self.canShowInput() {
                 return
             }
@@ -39,7 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return
             }
             // println(e)
-            
             
             
             for c in e.charactersIgnoringModifiers!.uppercaseString.unicodeScalars {
@@ -294,7 +304,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     
-    @IBAction func toggleState(sender: NSMenuItem) {
+    @IBAction func toggleState(sender: AnyObject!) {
         enabled = !enabled
     }
     
@@ -304,6 +314,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func openPreferencesWindow(sender: AnyObject) {
         preferences.makeKeyAndOrderFront(nil)
+        NSApp.activateIgnoringOtherApps!foo(true)
     }
     
     @IBAction func chooseFont(sender: AnyObject) {

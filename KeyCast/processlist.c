@@ -1,5 +1,14 @@
 #include "processlist.h"
 
+#include <assert.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/sysctl.h>
+
+typedef struct kinfo_proc kinfo_proc;
+
 int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 // Returns a list of all BSD processes on the system.  This routine
 // allocates the list and puts it in *procList and a count of the

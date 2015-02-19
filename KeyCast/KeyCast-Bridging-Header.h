@@ -3,3 +3,4 @@
 //
 
 #import "processlist.h"
+#import <ShortcutRecorder/ShortcutRecorder.h>
