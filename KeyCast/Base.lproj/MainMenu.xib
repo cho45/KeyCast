@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -14,6 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="KeyCast" customModuleProvider="target">
             <connections>
+                <outlet property="about" destination="eHO-4z-9ib" id="E5L-wu-t4r"/>
                 <outlet property="menu" destination="41B-TT-Qk7" id="Qqk-Ba-R5a"/>
                 <outlet property="menuEnabled" destination="evN-s3-wS4" id="8fZ-BD-hV4"/>
                 <outlet property="preferences" destination="QvC-M9-y7g" id="bhK-aQ-Wab"/>
@@ -46,7 +48,7 @@
                 <menuItem title="About…" id="W7c-0t-zAM">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="orderFrontStandardAboutPanel:" target="-2" id="TzQ-gH-BAl"/>
+                        <action selector="showAbout:" target="Voe-Tx-rLC" id="ufp-Pc-bvl"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="5QR-zT-2pn"/>
@@ -946,5 +948,49 @@
             </connections>
             <point key="canvasLocation" x="132" y="525.5"/>
         </window>
+        <window title="About" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="eHO-4z-9ib" customClass="AboutWindow" customModule="KeyCast" customModuleProvider="target">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="163" y="199" width="814" height="372"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <view key="contentView" id="Xla-zW-f6y">
+                <rect key="frame" x="0.0" y="0.0" width="814" height="372"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <webView fixedFrame="YES" maintainsBackForwardList="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LpT-Ks-D4B">
+                        <rect key="frame" x="214" y="-2" width="600" height="374"/>
+                        <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12" plugInsEnabled="NO" javaEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO"/>
+                    </webView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="djQ-jf-jTz">
+                        <rect key="frame" x="40" y="198" width="128" height="128"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="vqz-d8-oQu"/>
+                    </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ecw-No-MFu">
+                        <rect key="frame" x="38" y="122" width="132" height="46"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="KeyCast" id="Vys-ux-UBK">
+                            <font key="font" size="29" name="Helvetica-Bold"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MCk-jq-aF0">
+                        <rect key="frame" x="38" y="97" width="132" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="XZk-1H-4sa">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="labelVersion" destination="MCk-jq-aF0" id="1Nd-2R-FNV"/>
+                <outlet property="webview" destination="LpT-Ks-D4B" id="eGU-a4-7Yz"/>
+            </connections>
+            <point key="canvasLocation" x="-33" y="253"/>
+        </window>
     </objects>
+    <resources>
+        <image name="NSApplicationIcon" width="128" height="128"/>
+    </resources>
 </document>

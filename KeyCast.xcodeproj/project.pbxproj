@@ -24,6 +24,7 @@
 		74742F7E1A9477C600B6DD89 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74742F761A9476CA00B6DD89 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74742F7F1A9477C600B6DD89 /* PTHotKey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74742F781A9476CA00B6DD89 /* PTHotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		748E2EC91A87AF3100F5B319 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E2EC81A87AF3100F5B319 /* Accessibility.swift */; };
+		74FE2A001A962803004F98D5 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE29FF1A962803004F98D5 /* AboutWindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		74547BE01A8A559D003A079A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		74742F6F1A9476C900B6DD89 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
 		748E2EC81A87AF3100F5B319 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		74FE29FF1A962803004F98D5 /* AboutWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				28F4783D1A8DBB9F00E88A71 /* Utils.swift */,
 				286F3C491A8DF94800D56393 /* Toast.swift */,
 				28356C781A95E82C0083749C /* Credits.html */,
+				74FE29FF1A962803004F98D5 /* AboutWindowController.swift */,
 			);
 			path = KeyCast;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				28FD3B861A88596600D6A1C4 /* MainView.swift in Sources */,
 				28F4783E1A8DBB9F00E88A71 /* Utils.swift in Sources */,
 				74547BE11A8A559D003A079A /* README.md in Sources */,
+				74FE2A001A962803004F98D5 /* AboutWindowController.swift in Sources */,
 				285ED37E1A888C4E00E97321 /* PreferencesWindowController.swift in Sources */,
 				28485C551A84AFF000667ECB /* AppDelegate.swift in Sources */,
 			);

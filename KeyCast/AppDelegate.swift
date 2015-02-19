@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var menuEnabled: NSMenuItem!
     @IBOutlet weak var preferences: PreferencesWindow!
     @IBOutlet weak var toast: ToastWindow!
+    @IBOutlet weak var about: AboutWindow!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
@@ -375,6 +376,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         return false
+    }
+    
+    @IBAction func showAbout(sender: AnyObject) {
+        about.makeKeyAndOrderFront(nil)
+        NSApp.activateIgnoringOtherApps!(true)
     }
 }
 
