@@ -1,7 +1,7 @@
 KeyCast
 =======
 
-Display keystroke for desktop screencast.
+Display keystroke for desktop screencast. (demo movie: <a href="https://www.youtube.com/watch?v=RBCT56Tzpu4">youtube</a>)
 
 Automatically Hide Password Input
 ---------------------------------
@@ -13,6 +13,15 @@ Supported:
  * Native AXSecureTextField
  * Google Chrome's password input
  * Local `sudo` (hide on `sudo` is in processlist)
+
+Download and Install
+--------------------
+
+Download .dmg from releases page:
+
+https://github.com/cho45/KeyCast/releases
+
+Copy KeyCast.app to your Application folder.
 
 Scripting Bridge
 ----------------
