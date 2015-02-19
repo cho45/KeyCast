@@ -19,11 +19,11 @@ class AboutWindow: NSWindow, WKNavigationDelegate {
     
     override func webView(sender: WebView!, decidePolicyForNavigationAction actionInformation: [NSObject : AnyObject]!, request: NSURLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!) {
 
-            if actionInformation["WebActionOriginalURLKey"] != nil {
-                listener.ignore()
-                NSWorkspace.sharedWorkspace().openURL(request.URL)
-            } else {
-                listener.use()
-            }
+        if actionInformation["WebActionOriginalURLKey"] != nil {
+            listener.ignore()
+            NSWorkspace.sharedWorkspace().openURL(request.URL)
+        } else {
+            listener.use()
+        }
     }
 }

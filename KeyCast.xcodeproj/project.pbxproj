@@ -148,12 +148,12 @@
 				748E2EC81A87AF3100F5B319 /* Accessibility.swift */,
 				28FD3B851A88596600D6A1C4 /* MainView.swift */,
 				285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */,
-				282BCF531A8A0C1200472C8A /* KeyCast-Bridging-Header.h */,
-				28F478371A8D933800E88A71 /* app.sdef */,
-				28F4783D1A8DBB9F00E88A71 /* Utils.swift */,
-				286F3C491A8DF94800D56393 /* Toast.swift */,
-				28356C781A95E82C0083749C /* Credits.html */,
 				74FE29FF1A962803004F98D5 /* AboutWindowController.swift */,
+				286F3C491A8DF94800D56393 /* Toast.swift */,
+				28F4783D1A8DBB9F00E88A71 /* Utils.swift */,
+				282BCF531A8A0C1200472C8A /* KeyCast-Bridging-Header.h */,
+				28356C781A95E82C0083749C /* Credits.html */,
+				28F478371A8D933800E88A71 /* app.sdef */,
 			);
 			path = KeyCast;
 			sourceTree = "<group>";
