@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
@@ -714,7 +714,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="622" height="392"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="622" height="392"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -789,11 +789,11 @@
                         </textFieldCell>
                     </textField>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jYe-WJ-OjM">
-                        <rect key="frame" x="161" y="192" width="298" height="20"/>
+                        <rect key="frame" x="161" y="192" width="298" height="21"/>
                         <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="15" doubleValue="10" tickMarkPosition="above" sliderType="linear" id="c6t-bz-zFG"/>
                     </slider>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SZP-7Y-ifU">
-                        <rect key="frame" x="161" y="167" width="298" height="20"/>
+                        <rect key="frame" x="161" y="167" width="298" height="21"/>
                         <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="90" tickMarkPosition="above" sliderType="linear" id="d3m-3X-NkN"/>
                     </slider>
                     <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="bLf-TK-Y6e">
@@ -896,7 +896,7 @@
                         </textFieldCell>
                     </textField>
                     <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4rO-fu-kEb" customClass="SRRecorderControl">
-                        <rect key="frame" x="170" y="20" width="300" height="25"/>
+                        <rect key="frame" x="172" y="20" width="300" height="25"/>
                     </customView>
                 </subviews>
             </view>
@@ -928,7 +928,7 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="9Db-PD-DD5" customClass="ToastWindow" customModule="KeyCast" customModuleProvider="target">
             <windowStyleMask key="styleMask" utility="YES" HUD="YES"/>
             <rect key="contentRect" x="196" y="240" width="200" height="59"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="UK5-JO-B2U" customClass="ToastView" customModule="KeyCast" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="200" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -952,7 +952,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="163" y="199" width="814" height="372"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="Xla-zW-f6y">
                 <rect key="frame" x="0.0" y="0.0" width="814" height="372"/>
                 <autoresizingMask key="autoresizingMask"/>
