@@ -22,55 +22,55 @@ class PreferencesWindow: NSWindow {
     
     var width : Int {
         get {
-            return userDefaultsController.values.valueForKey("width") as Int
+            return userDefaultsController.values.valueForKey("width") as! Int
         }
     }
     
     var height : Int {
         get {
-            return userDefaultsController.values.valueForKey("height") as Int
+            return userDefaultsController.values.valueForKey("height") as! Int
         }
     }
     
     var lines : Int {
         get {
-            return userDefaultsController.values.valueForKey("lines") as Int
+            return userDefaultsController.values.valueForKey("lines") as! Int
         }
     }
     
     var shadow : Int {
         get {
-            return userDefaultsController.values.valueForKey("shadow") as Int
+            return userDefaultsController.values.valueForKey("shadow") as! Int
         }
     }
     
     var opacity : Int {
         get {
-            return userDefaultsController.values.valueForKey("opacity") as Int
+            return userDefaultsController.values.valueForKey("opacity")as! Int
         }
     }
     
     var hideInputAutomaticaly : Bool {
         get {
-            return userDefaultsController.values.valueForKey("hideInputAutomaticaly") as Bool
+            return userDefaultsController.values.valueForKey("hideInputAutomaticaly") as! Bool
         }
     }
     var hideNativePasswordInput : Bool {
         get {
-            return hideInputAutomaticaly && userDefaultsController.values.valueForKey("hideNativePasswordInput") as Bool
+            return hideInputAutomaticaly && userDefaultsController.values.valueForKey("hideNativePasswordInput") as! Bool
         }
     }
     var hideSudoInProcessList : Bool {
         get {
-            return hideInputAutomaticaly &&  userDefaultsController.values.valueForKey("hideSudoInProcessList") as Bool
+            return hideInputAutomaticaly &&  userDefaultsController.values.valueForKey("hideSudoInProcessList") as! Bool
         }
     }
     
     var hotkey : (UInt16, NSEventModifierFlags)? {
         get {
             if let key = userDefaultsController.values.valueForKey("hotkey") as? Dictionary<String, AnyObject> {
-                let keyCode : UInt16 = numericCast(key["keyCode"]! as UInt)
-                let modifierFlags = NSEventModifierFlags(key["modifierFlags"] as UInt)
+                let keyCode : UInt16 = numericCast(key["keyCode"]! as! UInt)
+                let modifierFlags = NSEventModifierFlags(key["modifierFlags"] as! UInt)
                 return (keyCode, modifierFlags)
             } else {
                 return nil
@@ -107,8 +107,8 @@ class PreferencesWindow: NSWindow {
         inputHideNativePasswordInput.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideNativePasswordInput", options: [ "NSContinuouslyUpdatesValue": true ])
         inputHideSudoInProcessList.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideSudoInProcessList", options: [ "NSContinuouslyUpdatesValue": true ])
         
-        let fontName = userDefaultsController.values.valueForKey("fontName") as String?
-        let pointSize = userDefaultsController.values.valueForKey("pointSize") as Float?
+        let fontName = userDefaultsController.values.valueForKey("fontName") as! String?
+        let pointSize = userDefaultsController.values.valueForKey("pointSize") as! Float?
         if fontName != nil && pointSize != nil {
             let font_ = NSFont(name: fontName!, size: CGFloat(pointSize!))
             if font_ != nil {

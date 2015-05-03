@@ -27,7 +27,7 @@ class MainView : NSView {
         ]
         
         var y = 0
-        let lines = split(log, { $0 == "\n" }).reverse()
+        let lines = split(log, isSeparator: { $0 == "\n" }).reverse()
         for line in lines {
             let storage = NSTextStorage(string: line, attributes: attrs)
             let manager = NSLayoutManager()
@@ -47,7 +47,7 @@ class MainView : NSView {
     
     func appendLog(str: String) {
         log += str
-        let lines = split(log, { $0 == "\n" })
+        let lines = split(log, isSeparator: { $0 == "\n" })
         if lines.count > maxLine {
             log = join("\n", lines[lines.count - maxLine ..< lines.count])
         }

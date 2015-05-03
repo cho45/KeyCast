@@ -54,13 +54,13 @@ struct Accessibility {
         
         // ScriptingBridge を使い、表示したいところまで自動で移動させる
         // open System Preference -> Security and Privacy -> Accessibility
-        let prefs = SBApplication.applicationWithBundleIdentifier("com.apple.systempreferences")! as SBSystemPreferencesApplication
+        let prefs = SBApplication.applicationWithBundleIdentifier("com.apple.systempreferences")! as! SBSystemPreferencesApplication
         prefs.activate()
         for pane_ in prefs.panes! {
-            let pane = pane_ as SBSystemPreferencesPane
+            let pane = pane_ as! SBSystemPreferencesPane
             if pane.id == "com.apple.preference.security" {
                 for anchor_ in pane.anchors! {
-                    let anchor = anchor_ as SBSystemPreferencesAnchor
+                    let anchor = anchor_ as! SBSystemPreferencesAnchor
                     if anchor.name == "Privacy_Accessibility" {
                         println(pane, anchor)
                         anchor.reveal!()

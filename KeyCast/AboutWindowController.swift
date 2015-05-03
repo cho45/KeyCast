@@ -12,8 +12,8 @@ class AboutWindow: NSWindow, WKNavigationDelegate {
         webview.policyDelegate = self
         
         let info = NSBundle.mainBundle().infoDictionary!
-        let appVersion = info["CFBundleShortVersionString"] as String
-        let buildVersion = info["CFBundleVersion"] as String
+        let appVersion = info["CFBundleShortVersionString"] as! String
+        let buildVersion = info["CFBundleVersion"] as! String
         labelVersion.stringValue = "v\(appVersion) build \(buildVersion)"
     }
     
@@ -21,7 +21,7 @@ class AboutWindow: NSWindow, WKNavigationDelegate {
 
         if actionInformation["WebActionOriginalURLKey"] != nil {
             listener.ignore()
-            NSWorkspace.sharedWorkspace().openURL(request.URL)
+            NSWorkspace.sharedWorkspace().openURL(request.URL!)
         } else {
             listener.use()
         }

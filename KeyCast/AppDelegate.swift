@@ -143,7 +143,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // callback
     func enableAccessibilityForNewApplication(aNotification: NSNotification) {
-        let pid = aNotification.userInfo!["NSApplicationProcessIdentifier"] as Int
+        let pid = aNotification.userInfo!["NSApplicationProcessIdentifier"] as! Int
         
         var ptr: Unmanaged<AnyObject>?
         let app = AXUIElementCreateApplication(Int32(pid)).takeRetainedValue()
@@ -238,7 +238,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if ptr == nil {
             return true
         }
-        let focusedApp = ptr!.takeRetainedValue() as AXUIElement
+        let focusedApp = ptr!.takeRetainedValue() as! AXUIElement
         
         var pid: pid_t = 0
         AXUIElementGetPid(focusedApp, &pid)
@@ -254,7 +254,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if ptr == nil {
             return true
         }
-        let ui = ptr!.takeRetainedValue() as AXUIElement
+        let ui = ptr!.takeRetainedValue() as! AXUIElement
         
         
         /*
@@ -294,7 +294,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         AXUIElementCopyAttributeValue(ui, "AXSubrole", &ptr)
         if ptr != nil {
-            let value = ptr!.takeRetainedValue() as String
+            let value = ptr!.takeRetainedValue() as! String
             if value == "AXSecureTextField" {
                 return false
             }
@@ -329,7 +329,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     override func changeFont(sender: AnyObject?) {
-        let fontManager = sender! as NSFontManager
+        let fontManager = sender! as! NSFontManager
         println("changeFont")
         println(fontManager)
         preferences.font = fontManager.convertFont(preferences.font)
