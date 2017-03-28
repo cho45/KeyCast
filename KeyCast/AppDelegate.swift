@@ -10,7 +10,7 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+    let statusItem = NSStatusBar.system().statusItem(withLength: -1)
     var enabled: Bool = true {
         didSet {
             menuEnabled.state = enabled ? 1 : 0
@@ -20,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     var window: NSWindow! = nil
     var view: MainView! = nil
-    var prevKeyed: NSDate = NSDate()
+    var prevKeyed: Date = Date()
 
     @IBOutlet weak var menu: NSMenu!
     @IBOutlet weak var menuEnabled: NSMenuItem!
@@ -28,17 +28,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var toast: ToastWindow!
     @IBOutlet weak var about: AboutWindow!
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         Accessibility.checkAccessibilityEnabled(self)
+        print("launch")
 
-        NSEvent.addGlobalMonitorForEventsMatchingMask(NSEventMask.KeyDownMask) { (e: NSEvent!) in
+        NSEvent.addGlobalMonitorForEvents(matching: NSEventMask.keyDown) { (e: NSEvent!) in
             if let (hotkey, hotkeyflags) = self.preferences.hotkey {
                 // println("mod")
                 // println(String(e.modifierFlags.rawValue & NSEventModifierFlags.DeviceIndependentModifierFlagsMask.rawValue, radix: 2))
                 // println(String(hotkeyflags.rawValue, radix: 2))
                 let sameKeyCode = e.keyCode == hotkey
-                let sameModifiers = (e.modifierFlags & NSEventModifierFlags.DeviceIndependentModifierFlagsMask).rawValue == hotkeyflags.rawValue
+                let sameModifiers = (e.modifierFlags.rawValue & NSEventModifierFlags.deviceIndependentFlagsMask.rawValue) == hotkeyflags.rawValue
                 if sameKeyCode && sameModifiers {
                     self.toggleState(nil)
                 }
@@ -47,20 +48,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if !self.canShowInput() {
                 return
             }
-            if e.type != NSEventType.KeyDown {
+            if e.type != NSEventType.keyDown {
                 return
             }
             // println(e)
             
             
-            for c in e.charactersIgnoringModifiers!.uppercaseString.unicodeScalars {
-                println(NSString(format: "%08X", c.value));
+            for c in e.charactersIgnoringModifiers!.uppercased().unicodeScalars {
+                print(NSString(format: "%08X", c.value));
             }
             
             let (mod, char) = Utils.keyStringFromEvent(e)
 
             if mod.isEmpty {
-                let interval = NSDate().timeIntervalSinceDate(self.prevKeyed)
+                let interval = Date().timeIntervalSince(self.prevKeyed)
                 if interval > 1 {
                     self.view.appendLog("\n" + char)
                 } else {
@@ -71,15 +72,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             }
             
-            self.prevKeyed = NSDate()
+            self.prevKeyed = Date()
         }
         
         let rect = NSRect(x: 0, y: 0, width: 800, height: 500)
-        window = NSWindow(contentRect: rect, styleMask: NSBorderlessWindowMask, backing: NSBackingStoreType.Buffered, defer: false)
-        window.opaque = false
+        window = NSWindow(contentRect: rect, styleMask: NSBorderlessWindowMask, backing: NSBackingStoreType.buffered, defer: false)
+        window.isOpaque = false
         window.hasShadow = false
         window.level = 1000
-        window.movableByWindowBackground = true
+        window.isMovableByWindowBackground = true
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         
@@ -95,10 +96,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         view.appendLog("KeyCast Initialized\nYou can drag this to the position you want")
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
-            selector: "userDefaultsDidChange:",
-            name: NSUserDefaultsDidChangeNotification,
+            selector: #selector(AppDelegate.userDefaultsDidChange(_:)),
+            name: UserDefaults.didChangeNotification,
             object: nil
         )
         userDefaultsDidChange(nil)
@@ -120,68 +121,68 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // VoiceOver が起動していない限りアクセシビリティオブジェクトを作らない一部アプリケーション用 (eg. Google Chrome) に
     // VoiceOver がセットする属性をセットする。VoiceOver 判定のため自プロセスには設定しない
     func enableGlobalAccessibilityFeatures() {
-        println("enableGlobalAccessibilityFeatures")
-        NSWorkspace.sharedWorkspace().notificationCenter.addObserver(
+        print("enableGlobalAccessibilityFeatures")
+        NSWorkspace.shared().notificationCenter.addObserver(
             self,
-            selector: "enableAccessibilityForNewApplication:",
-            name: NSWorkspaceDidLaunchApplicationNotification,
+            selector: #selector(AppDelegate.enableAccessibilityForNewApplication(_:)),
+            name: NSNotification.Name.NSWorkspaceDidLaunchApplication,
             object: nil
         )
         
-        var ptr: Unmanaged<AnyObject>?
-        let pid = NSProcessInfo.processInfo().processIdentifier
-        for application in NSWorkspace.sharedWorkspace().runningApplications {
+        let ptr: UnsafeMutablePointer<AnyObject?> = UnsafeMutablePointer<AnyObject?>.allocate(capacity: 1)
+        let pid = ProcessInfo.processInfo.processIdentifier
+        for application in NSWorkspace.shared().runningApplications {
             if application.processIdentifier == pid {
                 continue
             }
-            let app = AXUIElementCreateApplication(application.processIdentifier).takeRetainedValue()
-            println("enableGlobalAccessibilityFeatures: \(app)")
-            AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
-            AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface", 1)
+            let app: AXUIElement! = AXUIElementCreateApplication(application.processIdentifier)
+            print("enableGlobalAccessibilityFeatures: \(app)")
+            AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface" as NSString, ptr)
+            AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface" as NSString, 1 as AnyObject)
         }
     }
     
     // callback
-    func enableAccessibilityForNewApplication(aNotification: NSNotification) {
+    func enableAccessibilityForNewApplication(_ aNotification: Notification) {
         let pid = aNotification.userInfo!["NSApplicationProcessIdentifier"] as! Int
         
-        var ptr: Unmanaged<AnyObject>?
-        let app = AXUIElementCreateApplication(Int32(pid)).takeRetainedValue()
-        println("NSWorkspaceWillLaunchApplicationNotification")
-        println(app)
+        let ptr: UnsafeMutablePointer<AnyObject?> = UnsafeMutablePointer<AnyObject?>.allocate(capacity: 1)
+        let app = AXUIElementCreateApplication(Int32(pid))
+        print("NSWorkspaceWillLaunchApplicationNotification")
+        print(app)
         
-        AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
-        AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface", 1)
+        AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface" as NSString, ptr)
+        AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface" as NSString, 1 as AnyObject)
     }
     
     func disableGlobalAccessibilityFeatures() {
-        NSWorkspace.sharedWorkspace().notificationCenter.removeObserver(self, name: NSWorkspaceWillLaunchApplicationNotification, object: nil)
+        NSWorkspace.shared().notificationCenter.removeObserver(self, name: NSNotification.Name.NSWorkspaceWillLaunchApplication, object: nil)
         
         if isVoiceOverRunning() {
             return
         }
         
-        var ptr: Unmanaged<AnyObject>?
-        let pid = NSProcessInfo.processInfo().processIdentifier
-        for application in NSWorkspace.sharedWorkspace().runningApplications {
+        let ptr: UnsafeMutablePointer<AnyObject?> = UnsafeMutablePointer<AnyObject?>.allocate(capacity: 1)
+        let pid = ProcessInfo.processInfo.processIdentifier
+        for application in NSWorkspace.shared().runningApplications {
             if application.processIdentifier == pid {
                 continue
             }
-            let app = AXUIElementCreateApplication(application.processIdentifier).takeRetainedValue()
-            println(app)
+            let app = AXUIElementCreateApplication(application.processIdentifier)
+            print(app)
             
-            AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
-            AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface", 0)
+            AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface" as NSString, ptr)
+            AXUIElementSetAttributeValue(app, "AXEnhancedUserInterface" as NSString, 0 as AnyObject)
         }
     }
     
     // 完全に起動したあとでなければ常に false を返す
     func isVoiceOverRunning()->Bool {
-        var ptr: Unmanaged<AnyObject>?
-        let pid = NSProcessInfo.processInfo().processIdentifier
-        let app = AXUIElementCreateApplication(pid).takeRetainedValue()
-        AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface", &ptr)
-        if let running = ptr?.takeRetainedValue() as? Int {
+        let ptr: UnsafeMutablePointer<AnyObject?> = UnsafeMutablePointer<AnyObject?>.allocate(capacity: 1)
+        let pid = ProcessInfo.processInfo.processIdentifier
+        let app = AXUIElementCreateApplication(pid)
+        AXUIElementCopyAttributeValue(app, "AXEnhancedUserInterface" as NSString, ptr)
+        if let running = ptr.pointee as? Int {
             if running == 1 {
                 return true
             }
@@ -189,7 +190,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
     
-    func userDefaultsDidChange(aNotification: NSNotification!) {
+    func userDefaultsDidChange(_ aNotification: Notification!) {
         window.alphaValue = CGFloat(preferences.opacity) / 100.0
         self.resize(preferences.width, height: preferences.height)
         view.shadowCount = preferences.shadow
@@ -197,11 +198,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         view.needsDisplay = true
     }
     
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         disableGlobalAccessibilityFeatures()
     }
     
-    func resize (width: Int, height: Int) {
+    func resize (_ width: Int, height: Int) {
         let current = window.frame
         let rect = NSRect(x: Int(current.minX), y: Int(current.minY), width: width, height: height)
         window.setFrame(rect, display: true)
@@ -209,7 +210,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func updateMenuTitle() {
-        statusItem.title = (enabled ? "\u{2713} " : "  ") + NSRunningApplication.currentApplication().localizedName!
+        statusItem.title = (enabled ? "\u{2713} " : "  ") + NSRunningApplication.current().localizedName!
     }
     
     func canShowInput()-> Bool {
@@ -230,15 +231,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         
-        var ptr: Unmanaged<AnyObject>?
+        let ptr: UnsafeMutablePointer<AnyObject?> = UnsafeMutablePointer<AnyObject?>.allocate(capacity: 1)
         
-        let system = AXUIElementCreateSystemWide().takeRetainedValue()
+        let system = AXUIElementCreateSystemWide()
         
-        AXUIElementCopyAttributeValue(system, "AXFocusedApplication", &ptr)
-        if ptr == nil {
+        AXUIElementCopyAttributeValue(system, "AXFocusedApplication" as NSString, ptr)
+        if ptr.pointee == nil {
             return true
         }
-        let focusedApp = ptr!.takeRetainedValue() as! AXUIElement
+        let focusedApp = ptr.pointee! as! AXUIElement
         
         var pid: pid_t = 0
         AXUIElementGetPid(focusedApp, &pid)
@@ -250,11 +251,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let bundleId = bundleId_!
         
         
-        AXUIElementCopyAttributeValue(focusedApp, NSAccessibilityFocusedUIElementAttribute, &ptr)
-        if ptr == nil {
+        AXUIElementCopyAttributeValue(focusedApp, NSAccessibilityFocusedUIElementAttribute as CFString, ptr)
+        if ptr.pointee == nil {
             return true
         }
-        let ui = ptr!.takeRetainedValue() as! AXUIElement
+        let ui = ptr.pointee! as! AXUIElement
         
         
         /*
@@ -292,9 +293,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         */
         
-        AXUIElementCopyAttributeValue(ui, "AXSubrole", &ptr)
-        if ptr != nil {
-            let value = ptr!.takeRetainedValue() as! String
+        AXUIElementCopyAttributeValue(ui, "AXSubrole" as CFString, ptr)
+        if ptr.pointee != nil {
+            let value = ptr.pointee! as! String
             if value == "AXSecureTextField" {
                 return false
             }
@@ -305,21 +306,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     
-    @IBAction func toggleState(sender: AnyObject!) {
+    @IBAction func toggleState(_ sender: AnyObject!) {
         enabled = !enabled
     }
     
-    @IBAction func clearLog(sender: AnyObject) {
+    @IBAction func clearLog(_ sender: AnyObject) {
         view.clear()
     }
     
-    @IBAction func openPreferencesWindow(sender: AnyObject) {
+    @IBAction func openPreferencesWindow(_ sender: AnyObject) {
         preferences.makeKeyAndOrderFront(nil)
-        NSApp.activateIgnoringOtherApps!(true)
+        NSApp.activate(ignoringOtherApps: true)
     }
     
-    @IBAction func chooseFont(sender: AnyObject) {
-        let fontManager = NSFontManager.sharedFontManager()
+    @IBAction func chooseFont(_ sender: AnyObject) {
+        let fontManager = NSFontManager.shared()
         fontManager.delegate = self
         fontManager.target = self
         fontManager.setSelectedFont(preferences.font, isMultiple: false)
@@ -328,14 +329,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         fontPanel?.makeKeyAndOrderFront(sender)
     }
     
-    override func changeFont(sender: AnyObject?) {
+    override func changeFont(_ sender: Any?) {
         let fontManager = sender! as! NSFontManager
-        println("changeFont")
-        println(fontManager)
-        preferences.font = fontManager.convertFont(preferences.font)
+        print("changeFont")
+        print(fontManager)
+        preferences.font = fontManager.convert(preferences.font)
         view.needsDisplay = true
-        println(preferences.font.fontName)
-        println(preferences.font.pointSize)
+        print(preferences.font.fontName)
+        print(preferences.font.pointSize)
         
         preferences.updateFontInfo(preferences.font)
         view.font = preferences.font
@@ -371,16 +372,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // osascript -e 'tell application "KeyCast"' -e 'set enabled to true' -e 'end tell'
     // osascript -e 'tell application "KeyCast"' -e 'set enabled to false' -e 'end tell'
-    override func application(sender: NSApplication, delegateHandlesKey key: String) -> Bool {
+    override func application(_ sender: NSApplication, delegateHandlesKey key: String) -> Bool {
         if key == "enabled" {
             return true
         }
         return false
     }
     
-    @IBAction func showAbout(sender: AnyObject) {
+    @IBAction func showAbout(_ sender: AnyObject) {
         about.makeKeyAndOrderFront(nil)
-        NSApp.activateIgnoringOtherApps!(true)
+        NSApp.activate(ignoringOtherApps: true)
     }
 }
 

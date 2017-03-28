@@ -15,14 +15,11 @@
 		28485C661A84AFF100667ECB /* KeyCastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28485C651A84AFF100667ECB /* KeyCastTests.swift */; };
 		285ED37E1A888C4E00E97321 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */; };
 		286F3C4A1A8DF94800D56393 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286F3C491A8DF94800D56393 /* Toast.swift */; };
+		28AF4E831E8A0D8C00B2716A /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AF4E7E1E8A0ADF00B2716A /* ShortcutRecorder.framework */; };
 		28F478381A8D933800E88A71 /* app.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 28F478371A8D933800E88A71 /* app.sdef */; };
 		28F4783E1A8DBB9F00E88A71 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F4783D1A8DBB9F00E88A71 /* Utils.swift */; };
 		28FD3B861A88596600D6A1C4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FD3B851A88596600D6A1C4 /* MainView.swift */; };
 		74547BE11A8A559D003A079A /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 74547BE01A8A559D003A079A /* README.md */; };
-		74742F7B1A9476F800B6DD89 /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74742F781A9476CA00B6DD89 /* PTHotKey.framework */; };
-		74742F7C1A9476F800B6DD89 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74742F761A9476CA00B6DD89 /* ShortcutRecorder.framework */; };
-		74742F7E1A9477C600B6DD89 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74742F761A9476CA00B6DD89 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		74742F7F1A9477C600B6DD89 /* PTHotKey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74742F781A9476CA00B6DD89 /* PTHotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		748E2EC91A87AF3100F5B319 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E2EC81A87AF3100F5B319 /* Accessibility.swift */; };
 		74FE2A001A962803004F98D5 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE29FF1A962803004F98D5 /* AboutWindowController.swift */; };
 /* End PBXBuildFile section */
@@ -35,23 +32,23 @@
 			remoteGlobalIDString = 28485C4E1A84AFF000667ECB;
 			remoteInfo = KeyCast;
 		};
-		74742F751A9476CA00B6DD89 /* PBXContainerItemProxy */ = {
+		28AF4E7D1E8A0ADF00B2716A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 74742F6F1A9476C900B6DD89 /* ShortcutRecorder.xcodeproj */;
+			containerPortal = 28AF4E6C1E8A0ADB00B2716A /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 939837800DA42965007F53F3;
 			remoteInfo = ShortcutRecorder.framework;
 		};
-		74742F771A9476CA00B6DD89 /* PBXContainerItemProxy */ = {
+		28AF4E7F1E8A0ADF00B2716A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 74742F6F1A9476C900B6DD89 /* ShortcutRecorder.xcodeproj */;
+			containerPortal = 28AF4E6C1E8A0ADB00B2716A /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E273122E1349EC9000A84433;
 			remoteInfo = PTHotKey.framework;
 		};
-		74742F791A9476CA00B6DD89 /* PBXContainerItemProxy */ = {
+		28AF4E811E8A0ADF00B2716A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 74742F6F1A9476C900B6DD89 /* ShortcutRecorder.xcodeproj */;
+			containerPortal = 28AF4E6C1E8A0ADB00B2716A /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 0D6B2468180304DE00CE1142;
 			remoteInfo = Demo;
@@ -65,8 +62,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				74742F7E1A9477C600B6DD89 /* ShortcutRecorder.framework in CopyFiles */,
-				74742F7F1A9477C600B6DD89 /* PTHotKey.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,11 +82,11 @@
 		28485C651A84AFF100667ECB /* KeyCastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCastTests.swift; sourceTree = "<group>"; };
 		285ED37D1A888C4E00E97321 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		286F3C491A8DF94800D56393 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		28AF4E6C1E8A0ADB00B2716A /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ../ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
 		28F478371A8D933800E88A71 /* app.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.sdef; sourceTree = "<group>"; };
 		28F4783D1A8DBB9F00E88A71 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		28FD3B851A88596600D6A1C4 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		74547BE01A8A559D003A079A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		74742F6F1A9476C900B6DD89 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = SOURCE_ROOT; };
 		748E2EC81A87AF3100F5B319 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		74FE29FF1A962803004F98D5 /* AboutWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,8 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74742F7B1A9476F800B6DD89 /* PTHotKey.framework in Frameworks */,
-				74742F7C1A9476F800B6DD89 /* ShortcutRecorder.framework in Frameworks */,
+				28AF4E831E8A0D8C00B2716A /* ShortcutRecorder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +131,8 @@
 		28485C511A84AFF000667ECB /* KeyCast */ = {
 			isa = PBXGroup;
 			children = (
+				28AF4E6C1E8A0ADB00B2716A /* ShortcutRecorder.xcodeproj */,
 				28485C541A84AFF000667ECB /* AppDelegate.swift */,
-				74742F6F1A9476C900B6DD89 /* ShortcutRecorder.xcodeproj */,
 				74547BE01A8A559D003A079A /* README.md */,
 				28398B1D1A8D924F009BBEBE /* processlist.c */,
 				282BCF551A8A0C1300472C8A /* processlist.h */,
@@ -183,12 +177,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		74742F701A9476C900B6DD89 /* Products */ = {
+		28AF4E781E8A0ADF00B2716A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				74742F761A9476CA00B6DD89 /* ShortcutRecorder.framework */,
-				74742F781A9476CA00B6DD89 /* PTHotKey.framework */,
-				74742F7A1A9476CA00B6DD89 /* Demo.app */,
+				28AF4E7E1E8A0ADF00B2716A /* ShortcutRecorder.framework */,
+				28AF4E801E8A0ADF00B2716A /* PTHotKey.framework */,
+				28AF4E821E8A0ADF00B2716A /* Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -238,11 +232,12 @@
 		28485C471A84AFF000667ECB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = cho45;
 				TargetAttributes = {
 					28485C4E1A84AFF000667ECB = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0820;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -251,6 +246,7 @@
 					};
 					28485C5E1A84AFF100667ECB = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 28485C4E1A84AFF000667ECB;
 					};
 				};
@@ -268,8 +264,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 74742F701A9476C900B6DD89 /* Products */;
-					ProjectRef = 74742F6F1A9476C900B6DD89 /* ShortcutRecorder.xcodeproj */;
+					ProductGroup = 28AF4E781E8A0ADF00B2716A /* Products */;
+					ProjectRef = 28AF4E6C1E8A0ADB00B2716A /* ShortcutRecorder.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -281,25 +277,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		74742F761A9476CA00B6DD89 /* ShortcutRecorder.framework */ = {
+		28AF4E7E1E8A0ADF00B2716A /* ShortcutRecorder.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ShortcutRecorder.framework;
-			remoteRef = 74742F751A9476CA00B6DD89 /* PBXContainerItemProxy */;
+			remoteRef = 28AF4E7D1E8A0ADF00B2716A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		74742F781A9476CA00B6DD89 /* PTHotKey.framework */ = {
+		28AF4E801E8A0ADF00B2716A /* PTHotKey.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = PTHotKey.framework;
-			remoteRef = 74742F771A9476CA00B6DD89 /* PBXContainerItemProxy */;
+			remoteRef = 28AF4E7F1E8A0ADF00B2716A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		74742F7A1A9476CA00B6DD89 /* Demo.app */ = {
+		28AF4E821E8A0ADF00B2716A /* Demo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = Demo.app;
-			remoteRef = 74742F791A9476CA00B6DD89 /* PBXContainerItemProxy */;
+			remoteRef = 28AF4E811E8A0ADF00B2716A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -385,15 +381,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -427,8 +427,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -437,6 +439,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -446,6 +449,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -457,9 +461,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = KeyCast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.lowreal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "KeyCast/KeyCast-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -471,8 +477,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = KeyCast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.lowreal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "KeyCast/KeyCast-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -491,7 +499,9 @@
 				);
 				INFOPLIST_FILE = KeyCastTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.lowreal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyCast.app/Contents/MacOS/KeyCast";
 			};
 			name = Debug;
@@ -507,7 +517,9 @@
 				);
 				INFOPLIST_FILE = KeyCastTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.lowreal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyCast.app/Contents/MacOS/KeyCast";
 			};
 			name = Release;

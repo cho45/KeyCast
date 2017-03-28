@@ -4,30 +4,32 @@
 //
 
 import Cocoa
+import Foundation
+
 
 class MainView : NSView {
     internal var log = ""
-    var font = NSFont.boldSystemFontOfSize(24)
+    var font = NSFont.boldSystemFont(ofSize: 24)
     var shadowCount = 10
     var maxLine : Int = 5
     
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
-        NSColor.clearColor().set()
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+        NSColor.clear.set()
         NSRectFill(self.bounds)
         
         let shadow = NSShadow()
-        shadow.shadowColor = NSColor.blackColor()
+        shadow.shadowColor = NSColor.black
         shadow.shadowBlurRadius = 2
         shadow.shadowOffset = NSSize(width: 0, height: 0)
         let attrs = [
-            NSForegroundColorAttributeName: NSColor.whiteColor(),
+            NSForegroundColorAttributeName: NSColor.white,
             NSFontAttributeName: font,
             NSShadowAttributeName: shadow,
-        ]
+        ] as [String : Any]
         
         var y = 0
-        let lines = split(log, isSeparator: { $0 == "\n" }).reverse()
+        let lines = log.components(separatedBy: "\n").reversed()
         for line in lines {
             let storage = NSTextStorage(string: line, attributes: attrs)
             let manager = NSLayoutManager()
@@ -36,20 +38,20 @@ class MainView : NSView {
             manager.addTextContainer(container)
             storage.addLayoutManager(manager)
             
-            let range = manager.glyphRangeForTextContainer(container)
-            for i in 1...shadowCount {
-                manager.drawGlyphsForGlyphRange(range, atPoint: NSPoint(x: 0, y: y))
+            let range = manager.glyphRange(for: container)
+            for _ in 1...shadowCount {
+                manager.drawGlyphs(forGlyphRange: range, at: NSPoint(x: 0, y: y))
             }
-            let rect = manager.boundingRectForGlyphRange(NSRange(location: 0, length: manager.numberOfGlyphs), inTextContainer: container)
+            let rect = manager.boundingRect(forGlyphRange: NSRange(location: 0, length: manager.numberOfGlyphs), in: container)
             y += Int(rect.size.height)
         }
     }
     
-    func appendLog(str: String) {
+    func appendLog(_ str: String) {
         log += str
-        let lines = split(log, isSeparator: { $0 == "\n" })
+        let lines = log.components(separatedBy: "\n" )
         if lines.count > maxLine {
-            log = join("\n", lines[lines.count - maxLine ..< lines.count])
+            log = lines[lines.count - maxLine ..< lines.count].joined(separator: "\n")
         }
         self.needsDisplay = true
     }

@@ -35,30 +35,30 @@ struct Utils {
         "\u{F72B}" : "↘",
     ]
     
-    static func keyStringFromEvent(e: NSEvent)->(String, String) {
+    static func keyStringFromEvent(_ e: NSEvent)->(String, String) {
         var mod = ""
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.ControlKeyMask.rawValue != 0 {
+        if e.modifierFlags.rawValue &  NSEventModifierFlags.control.rawValue != 0 {
             mod += "⌃"
         }
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.AlternateKeyMask.rawValue != 0 {
+        if e.modifierFlags.rawValue &  NSEventModifierFlags.option.rawValue != 0 {
             mod += "⌥"
         }
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.ShiftKeyMask.rawValue != 0 {
+        if e.modifierFlags.rawValue &  NSEventModifierFlags.shift.rawValue != 0 {
             mod += "⇧"
         }
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.CommandKeyMask.rawValue != 0 {
+        if e.modifierFlags.rawValue &  NSEventModifierFlags.command.rawValue != 0 {
             mod += "⌘"
         }
         
-        let char = keyToReadableString(e.charactersIgnoringModifiers!.uppercaseString)
+        let char = keyToReadableString(e.charactersIgnoringModifiers!.uppercased())
         
         return (mod, char)
     }
     
-    static func keyToReadableString (string: String)-> String {
+    static func keyToReadableString (_ string: String)-> String {
         var str = string
         for (k, v) in REPLACE_MAP {
-            str = str.stringByReplacingOccurrencesOfString(k, withString: v)
+            str = str.replacingOccurrences(of: k, with: v)
         }
         return str
     }
