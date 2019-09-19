@@ -37,20 +37,20 @@ struct Utils {
     
     static func keyStringFromEvent(e: NSEvent)->(String, String) {
         var mod = ""
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.ControlKeyMask.rawValue != 0 {
+        if e.modifierFlags.contains([.control]) {
             mod += "⌃"
         }
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.AlternateKeyMask.rawValue != 0 {
+        if e.modifierFlags.contains([.option]){
             mod += "⌥"
         }
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.ShiftKeyMask.rawValue != 0 {
+        if e.modifierFlags.contains([.shift]) {
             mod += "⇧"
         }
-        if e.modifierFlags.rawValue &  NSEventModifierFlags.CommandKeyMask.rawValue != 0 {
+        if e.modifierFlags.contains([.command]) {
             mod += "⌘"
         }
         
-        let char = keyToReadableString(e.charactersIgnoringModifiers!.uppercaseString)
+        let char = keyToReadableString(string: e.charactersIgnoringModifiers!.uppercased())
         
         return (mod, char)
     }
@@ -58,7 +58,7 @@ struct Utils {
     static func keyToReadableString (string: String)-> String {
         var str = string
         for (k, v) in REPLACE_MAP {
-            str = str.stringByReplacingOccurrencesOfString(k, withString: v)
+            str = str.replacingOccurrences(of: k, with: v)
         }
         return str
     }

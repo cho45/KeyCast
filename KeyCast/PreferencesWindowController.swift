@@ -5,7 +5,7 @@
 
 import Cocoa
 
-class PreferencesWindow: NSWindow {
+class PreferencesWindow: NSWindow, RecorderControlDelegate {
     @IBOutlet weak var textSelectedFont: NSTextField!
     @IBOutlet weak var inputWidth: NSTextField!
     @IBOutlet weak var inputHeight: NSTextField!
@@ -15,62 +15,62 @@ class PreferencesWindow: NSWindow {
     @IBOutlet weak var inputHideInputAutomaticaly: NSButton!
     @IBOutlet weak var inputHideNativePasswordInput: NSButton!
     @IBOutlet weak var inputHideSudoInProcessList: NSButton!
-    @IBOutlet weak var inputHotkey: SRRecorderControl!
+    @IBOutlet weak var inputHotkey: RecorderControl!
     
-    let userDefaultsController = NSUserDefaultsController.sharedUserDefaultsController()
-    var font = NSFont.boldSystemFontOfSize(24)
+    let userDefaultsController = NSUserDefaultsController.shared
+    var font = NSFont.boldSystemFont(ofSize: 24)
     
     var width : Int {
         get {
-            return userDefaultsController.values.valueForKey("width") as! Int
+            return userDefaultsController.value(forKey: "width") as! Int
         }
     }
     
     var height : Int {
         get {
-            return userDefaultsController.values.valueForKey("height") as! Int
+            return userDefaultsController.value(forKey: "height") as! Int
         }
     }
     
     var lines : Int {
         get {
-            return userDefaultsController.values.valueForKey("lines") as! Int
+            return userDefaultsController.value(forKey: "lines") as! Int
         }
     }
     
     var shadow : Int {
         get {
-            return userDefaultsController.values.valueForKey("shadow") as! Int
+            return userDefaultsController.value(forKey: "shadow") as! Int
         }
     }
     
     var opacity : Int {
         get {
-            return userDefaultsController.values.valueForKey("opacity")as! Int
+            return userDefaultsController.value(forKey: "opacity") as! Int
         }
     }
     
     var hideInputAutomaticaly : Bool {
         get {
-            return userDefaultsController.values.valueForKey("hideInputAutomaticaly") as! Bool
+            return userDefaultsController.value(forKey: "hideInputAutomaticaly") as! Bool
         }
     }
     var hideNativePasswordInput : Bool {
         get {
-            return hideInputAutomaticaly && userDefaultsController.values.valueForKey("hideNativePasswordInput") as! Bool
+            return hideInputAutomaticaly && userDefaultsController.value(forKey: "hideNativePasswordInput") as! Bool
         }
     }
     var hideSudoInProcessList : Bool {
         get {
-            return hideInputAutomaticaly &&  userDefaultsController.values.valueForKey("hideSudoInProcessList") as! Bool
+            return hideInputAutomaticaly &&  userDefaultsController.value(forKey: "hideSudoInProcessList") as! Bool
         }
     }
     
-    var hotkey : (UInt16, NSEventModifierFlags)? {
+    var hotkey : (UInt16, NSEvent.ModifierFlags)? {
         get {
-            if let key = userDefaultsController.values.valueForKey("hotkey") as? Dictionary<String, AnyObject> {
+            if let key = userDefaultsController.value(forKey: "hotkey") as? Dictionary<String, AnyObject> {
                 let keyCode : UInt16 = numericCast(key["keyCode"]! as! UInt)
-                let modifierFlags = NSEventModifierFlags(key["modifierFlags"] as! UInt)
+                let modifierFlags = NSEvent.ModifierFlags(rawValue: key["modifierFlags"] as! UInt)
                 return (keyCode, modifierFlags)
             } else {
                 return nil
@@ -79,8 +79,10 @@ class PreferencesWindow: NSWindow {
     }
     
     override func awakeFromNib() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.registerDefaults([
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: [
+            "fontName": "",
+            "pointSize": 16,
             "width": 800,
             "height": 600,
             "shadow": 5,
@@ -92,71 +94,72 @@ class PreferencesWindow: NSWindow {
         ])
         defaults.synchronize()
         
-        inputWidth.bind("value", toObject: userDefaultsController, withKeyPath: "values.width", options: [ "NSContinuouslyUpdatesValue": true ])
-        inputHeight.bind("value", toObject: userDefaultsController, withKeyPath: "values.height", options: [ "NSContinuouslyUpdatesValue": true ])
-        inputLines.bind("value", toObject: userDefaultsController, withKeyPath: "values.lines", options: [ "NSContinuouslyUpdatesValue": true ])
-        inputShadow.bind("value", toObject: userDefaultsController, withKeyPath: "values.shadow", options: [ "NSContinuouslyUpdatesValue": true ])
-        inputOpacity.bind("value", toObject: userDefaultsController, withKeyPath: "values.opacity", options: [ "NSContinuouslyUpdatesValue": true ])
-        inputHotkey.bind("value", toObject: userDefaultsController, withKeyPath: "values.hotkey", options: nil )
+        inputWidth.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.width", options:  [ NSBindingOption.continuouslyUpdatesValue: true ])
+        inputHeight.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.height", options: [ NSBindingOption.continuouslyUpdatesValue: true ])
+        inputLines.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.lines", options: [ NSBindingOption.continuouslyUpdatesValue: true ])
+        inputShadow.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.shadow", options: [ NSBindingOption.continuouslyUpdatesValue: true ])
+        inputOpacity.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.opacity", options: [ NSBindingOption.continuouslyUpdatesValue: true ])
+        inputHotkey.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.hotkey", options: nil )
         inputHotkey.delegate = self
         inputHotkey.allowsEscapeToCancelRecording = true
-        inputHotkey.setAllowedModifierFlags((NSEventModifierFlags.ShiftKeyMask | NSEventModifierFlags.CommandKeyMask | NSEventModifierFlags.ControlKeyMask | NSEventModifierFlags.AlternateKeyMask).rawValue, requiredModifierFlags: 0, allowsEmptyModifierFlags: false)
-        inputHotkey.enabled = true
+        inputHotkey.set(allowedModifierFlags: [.shift, .command, .control, .option], requiredModifierFlags: [], allowsEmptyModifierFlags: false)
+        inputHotkey.isEnabled = true
         
-        inputHideInputAutomaticaly.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideInputAutomaticaly", options: [ "NSContinuouslyUpdatesValue": true ])
-        inputHideNativePasswordInput.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideNativePasswordInput", options: [ "NSContinuouslyUpdatesValue": true ])
-        inputHideSudoInProcessList.bind("value", toObject: userDefaultsController, withKeyPath: "values.hideSudoInProcessList", options: [ "NSContinuouslyUpdatesValue": true ])
+        inputHideInputAutomaticaly.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.hideInputAutomaticaly", options: [ NSBindingOption.continuouslyUpdatesValue: true ])
+        inputHideNativePasswordInput.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.hideNativePasswordInput", options: [ NSBindingOption.continuouslyUpdatesValue: true ])
+        inputHideSudoInProcessList.bind(NSBindingName.value, to: userDefaultsController, withKeyPath: "values.hideSudoInProcessList", options: [ NSBindingOption.continuouslyUpdatesValue: true ])
         
-        let fontName = userDefaultsController.values.valueForKey("fontName") as! String?
-        let pointSize = userDefaultsController.values.valueForKey("pointSize") as! Float?
+        print(userDefaultsController.values)
+        let fontName = userDefaultsController.value(forKey:"fontName") as! String?
+        let pointSize = userDefaultsController.value(forKey:"pointSize") as! Float?
         if fontName != nil && pointSize != nil {
             let font_ = NSFont(name: fontName!, size: CGFloat(pointSize!))
             if font_ != nil {
                 font = font_!
             }
         }
-        updateFontInfo(font)
+        updateFontInfo(f: font)
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
-            selector: "userDefaultsDidChange:",
-            name: NSUserDefaultsDidChangeNotification,
+            selector: #selector(userDefaultsDidChange(aNotification:)),
+            name: UserDefaults.didChangeNotification,
             object: nil
         )
-        userDefaultsDidChange(nil)
+        userDefaultsDidChange(aNotification: nil)
     }
     
-    func userDefaultsDidChange(aNotification: NSNotification!) {
-        println("changed")
+    @objc func userDefaultsDidChange(aNotification: NSNotification!) {
+        print("changed")
         
         if hideInputAutomaticaly {
-            inputHideNativePasswordInput.enabled = true
-            inputHideSudoInProcessList.enabled = true
+            inputHideNativePasswordInput.isEnabled = true
+            inputHideSudoInProcessList.isEnabled = true
         } else {
-            inputHideNativePasswordInput.enabled = false
-            inputHideSudoInProcessList.enabled = false
+            inputHideNativePasswordInput.isEnabled = false
+            inputHideSudoInProcessList.isEnabled = false
         }
         
         // SRRecorderControl の bind を読むとなぜか無限ループになるのでここでは触らないようにしなければならない…
     }
     
-    func shortcutRecorderDidEndRecording(sr: SRRecorderControl) {
+    func shortcutRecorderDidEndRecording(sr: RecorderControl) {
     }
     
-    override func cancelOperation(sender: AnyObject?) {
+    func cancelOperation(sender: AnyObject?) {
         close()
     }
     
     func updateFontInfo(f: NSFont) {
         font = f
         textSelectedFont.stringValue = String(format: "%@ %.0fpt", font.displayName!, Float(font.pointSize))
-        userDefaultsController.values.setValue(font.fontName, forKey: "fontName")
-        userDefaultsController.values.setValue(Float(font.pointSize), forKey: "pointSize")
+        userDefaultsController.setValue(font.fontName, forKey: "fontName")
+        userDefaultsController.setValue(Float(font.pointSize), forKey: "pointSize")
     }
     
     @IBAction func setScreenWidth(sender: AnyObject) {
         if let width = screen?.visibleFrame.size.width {
-            userDefaultsController.values.setValue(width, forKey: "width")
+            userDefaultsController.setValue(width, forKey: "width")
         }
     }
 }
